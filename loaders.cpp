@@ -7,7 +7,7 @@ void slashdot_loader(Graph* slashdot_graph) {
   char buffer[1000];
   FILE *slashdot_fp = fopen(SLASHDOT_FILE, "r");
 
-  slashdot_graph->set_size(SLASHDOT_SIZE);
+  slashdot_graph->initialize(SLASHDOT_SIZE, SLASHDOT_DIRECTED);
 
   //read edges
   while (fgets(buffer, sizeof buffer, slashdot_fp) != NULL)
