@@ -20,7 +20,6 @@ void linear_deterministic_greedy(const Graph& graph,
   for (vector<int>::iterator node = nodes.begin();
        node != nodes.end();
        ++node) {
-    printf("Considering node %d\n",*node);
 
     //initialize partitions score
     for (int i=0; i<partitions_number; i++)

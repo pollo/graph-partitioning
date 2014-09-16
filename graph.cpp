@@ -48,7 +48,7 @@ double Graph::get_fraction_edges_cut(const Partition& partition) const {
   int edges_cut = 0;
   int tot_edges = 0;
 
-  for (size_t node = 0; node < nodes_number; node++)
+  for (int node = 0; node < nodes_number; node++)
   {
     int node_partition = partition.get_node_partition(node);
     for (vector<int>::const_iterator neighbor = neighbors[node].begin();

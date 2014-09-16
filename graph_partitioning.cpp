@@ -3,22 +3,59 @@
 #include"partition.h"
 #include"partitioners.h"
 
-#include<cstdio>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
-int main()
+#define MAX_PARTITIONS 10000
+
+int main(int argc, char** argv)
 {
-  Graph slashdot_graph;
+  Graph graph;
   Partition partition;
 
-  slashdot_loader(&slashdot_graph);
-  //slashdot_graph.print_graph();
+  if (argc != 4)
+  {
+    printf("Invalid number of parameters\n");
+    printf("Usage: %s <dataset name> <heuristic name> <partitions number>\n",
+           argv[0]);
+    exit(1);
+  }
 
-  linear_deterministic_greedy(slashdot_graph,
-                              4,
-                              &partition);
+  if (strncmp(argv[1],"slashdot",8) == 0)
+    slashdot_loader(&graph);
+  else
+  {
+    printf("Invalid dataset name %s\n",argv[1]);
+    exit(1);
+  }
 
-  printf("Fraction of edges cut: %d\n",
-         slashdot_graph.get_fraction_edges_cut(partition));
+  int partitions_number = strtol(argv[3], NULL, 10);
+  if (partitions_number < 1 || partitions_number > MAX_PARTITIONS)
+  {
+    printf("Invalid partition number %s\n",argv[3]);
+    exit(1);
+  }
+
+  if (strncmp(argv[2],"LDG",3) == 0)
+  {
+    linear_deterministic_greedy(graph,
+                                partitions_number,
+                                &partition);
+  }
+  else
+  {
+    printf("Invalid heuristic name %s\n",argv[2]);
+    exit(1);
+  }
+
+  double fraction_edges_cut = graph.get_fraction_edges_cut(partition);
+  printf("Fraction of edges cut of dataset %s with heuristic "\
+         "%s and %d partitions:\n %f\n",
+         argv[1],
+         argv[2],
+         partitions_number,
+         fraction_edges_cut);
 
   return 0;
 }
