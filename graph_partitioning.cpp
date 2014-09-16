@@ -24,6 +24,8 @@ int main(int argc, char** argv)
 
   if (strncmp(argv[1],"slashdot",8) == 0)
     slashdot_loader(&graph);
+  else if (strncmp(argv[1],"4elt",4) == 0)
+    elt_loader(&graph);
   else
   {
     printf("Invalid dataset name %s\n",argv[1]);
