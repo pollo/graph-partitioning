@@ -3,7 +3,8 @@
 
 #include "graph.h"
 
-#define SLASHDOT_SIZE 77360
+#define SLASHDOT_NODES 77360
+#define SLASHDOT_EDGES 905468
 #define SLASHDOT_DIRECTED true
 #define SLASHDOT_FILE "dataset/soc-Slashdot0811.txt"
 

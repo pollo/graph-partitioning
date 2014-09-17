@@ -12,7 +12,7 @@ void slashdot_loader(Graph* graph) {
   char buffer[1000];
   FILE *slashdot_fp = fopen(SLASHDOT_FILE, "r");
 
-  graph->initialize(SLASHDOT_SIZE, SLASHDOT_DIRECTED);
+  graph->initialize(SLASHDOT_NODES, SLASHDOT_EDGES, SLASHDOT_DIRECTED);
 
   //read edges
   while (fgets(buffer, sizeof buffer, slashdot_fp) != NULL)
@@ -36,7 +36,7 @@ void elt_loader(Graph* graph) {
   elt_file >> n;
   elt_file >> m;
 
-  graph->initialize(n, ELT_DIRECTED);
+  graph->initialize(n, m, ELT_DIRECTED);
 
   //read edges
   getline(elt_file, line);

@@ -45,6 +45,12 @@ int main(int argc, char** argv)
                                 partitions_number,
                                 &partition);
   }
+  else if (strncmp(argv[2],"FENNEL",6) == 0)
+  {
+    fennel(graph,
+           partitions_number,
+           &partition);
+  }
   else
   {
     printf("Invalid heuristic name %s\n",argv[2]);

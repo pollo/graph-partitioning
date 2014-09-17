@@ -5,9 +5,10 @@
 
 using namespace std;
 
-void Graph::initialize(int nodes_number, bool directed)
+void Graph::initialize(int nodes_number, int edges_number, bool directed)
 {
   this->nodes_number = nodes_number;
+  this->edges_number = edges_number;
   this->directed = directed;
   neighbors.resize(nodes_number);
 }
@@ -46,7 +47,6 @@ void Graph::get_nodes_randomly(vector<int>* nodes) const {
 
 double Graph::get_fraction_edges_cut(const Partition& partition) const {
   int edges_cut = 0;
-  int tot_edges = 0;
 
   for (int node = 0; node < nodes_number; node++)
   {
@@ -55,7 +55,6 @@ double Graph::get_fraction_edges_cut(const Partition& partition) const {
          neighbor != neighbors[node].end();
          ++neighbor)
     {
-      tot_edges += 1;
       if (node_partition != partition.get_node_partition(*neighbor))
         edges_cut++;
     }
@@ -64,8 +63,7 @@ double Graph::get_fraction_edges_cut(const Partition& partition) const {
   if (!this->directed)
   {
     edges_cut /= 2;
-    tot_edges /= 2;
   }
 
-  return ((double) edges_cut)/tot_edges;
+  return ((double) edges_cut)/edges_number;
 }
