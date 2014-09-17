@@ -23,7 +23,12 @@ int main(int argc, char** argv)
   }
 
   if (strncmp(argv[1],"slashdot",8) == 0)
-    slashdot_loader(&graph);
+    snap_loader(&graph, SLASHDOT_FILE, SLASHDOT_DIRECTED);
+  else if (strncmp(argv[1],"amazon",6) == 0) {
+    snap_loader(&graph, AMAZON_FILE, AMAZON_DIRECTED);
+    graph.print_graph();
+    return 0;
+  }
   else if (strncmp(argv[1],"4elt",4) == 0)
     elt_loader(&graph);
   else

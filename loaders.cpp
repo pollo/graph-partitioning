@@ -7,12 +7,17 @@
 
 using namespace std;
 
-void slashdot_loader(Graph* graph) {
+void snap_loader(Graph* graph, const char* file_name, bool directed) {
+  int n,m;
   int from, to;
   char buffer[1000];
-  FILE *slashdot_fp = fopen(SLASHDOT_FILE, "r");
+  FILE *slashdot_fp = fopen(file_name, "r");
 
-  graph->initialize(SLASHDOT_NODES, SLASHDOT_EDGES, SLASHDOT_DIRECTED);
+  fgets(buffer, sizeof buffer, slashdot_fp);
+  fgets(buffer, sizeof buffer, slashdot_fp);
+  fgets(buffer, sizeof buffer, slashdot_fp);
+  sscanf(buffer, "# Nodes: %d Edges: %d",&n,&m);
+  graph->initialize(n, m, directed);
 
   //read edges
   while (fgets(buffer, sizeof buffer, slashdot_fp) != NULL)

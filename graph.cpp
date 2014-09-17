@@ -1,5 +1,7 @@
 #include <cstdio>
 #include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
 #include"graph.h"
 
@@ -20,7 +22,7 @@ void Graph::add_neighbor(int node_index, int neighbor_index)
 
 void Graph::print_graph() const
 {
-  for (int i=0; i<nodes_number; i++)
+/*  for (int i=0; i<nodes_number; i++)
   {
     printf("Node %d has neighbors: ",i);
     const vector<int>& neighbors = get_neighbors(i);
@@ -31,6 +33,22 @@ void Graph::print_graph() const
       printf("%d ",*it);
     }
     printf("\n");
+    }*/
+  printf("%d %d\n",nodes_number, edges_number);
+  for (int i=0; i<nodes_number; i++)
+  {
+    const vector<int>& neighbors = get_neighbors(i);
+    bool no = true;
+    for (vector<int>::const_iterator it = neighbors.begin();
+         it != neighbors.end();
+         it++)
+    {
+      no = false;
+      printf("%d ",*it+1);
+    }
+    if (no)
+      printf("%d ",i+1);
+    printf("\n");
   }
 }
 
@@ -38,11 +56,14 @@ const vector<int>& Graph::get_neighbors(int node_index) const {
   return neighbors[node_index];
 }
 
+int myrandom (int i) { return std::rand()%i;}
+
 void Graph::get_nodes_randomly(vector<int>* nodes) const {
+  srand ( unsigned ( std::time(0) ) );
   nodes->resize(nodes_number);
   for (int i=0; i<nodes_number; i++)
     (*nodes)[i] = i;
-  random_shuffle(nodes->begin(), nodes->end());
+  random_shuffle(nodes->begin(), nodes->end(), myrandom);
 }
 
 double Graph::get_fraction_edges_cut(const Partition& partition) const {

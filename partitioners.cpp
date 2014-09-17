@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -75,8 +76,11 @@ void fennel(const Graph& graph,
             int partitions_number,
             Partition* partition)
 {
-  const double alfa = pow(partitions_number, 0.5)*(graph.get_edges_number()
-                                   / pow(graph.get_nodes_number(), 3/2.0));
+  //const double gamma = 3/2.0;
+  const double gamma = 1.1;
+  const double alfa = graph.get_edges_number() * pow(partitions_number, gamma-1.0) /
+    pow(graph.get_nodes_number(), gamma);
+  const bool with_threshold = false;
   const double v = 1.1;
 
   vector<int> nodes;
@@ -112,16 +116,23 @@ void fennel(const Graph& graph,
     for (int i=0; i<partitions_number; i++)
     {
       int partition_size = partition->get_partition_size(i);
-      double c = alfa * (pow(partition_size+1, gamma) - pow(partition_size, gamma));
+      //double c = alfa * (pow(partition_size+1, gamma) - pow(partition_size, gamma));
+      double c = alfa * gamma * pow(partition_size,gamma-1);
+      printf("partition %d size %d\n",i,partition_size);
+      printf("partition %d score %f\n",i,partition_score[i]);
       partition_score[i] -= c;
+      printf("partition %d score %f\n",i,partition_score[i]);
     }
+    printf("\n\n");
 
     //filter out partition above treshold
     vector<pair<double,int> > filtered_partition_score;
     for (int i=0; i<partitions_number; i++)
     {
+      //printf("Partition %d, score %f\n",i,partition_score[i]);
       if (partition->get_partition_size(i) <=
-          v * graph.get_nodes_number() / ((double)partitions_number))
+          v * graph.get_nodes_number() / ((double)partitions_number) ||
+          !with_threshold)
       {
         filtered_partition_score.push_back(pair<double, int>(partition_score[i],
                                                              i));
@@ -139,6 +150,8 @@ void fennel(const Graph& graph,
         score = filtered_partition_score[i].first;
       }
     }
+
+    //printf("Selected partition %d\n",selected_partition);
 
     //assign node to partition
     partition->set_node_partition(*node, selected_partition);
