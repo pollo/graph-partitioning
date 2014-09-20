@@ -2,22 +2,48 @@
 #include <algorithm>
 #include <ctime>
 #include <cstdlib>
+#include <cassert>
 
 #include"graph.h"
 
 using namespace std;
 
-void Graph::initialize(int nodes_number, int edges_number, bool directed)
+void Graph::initialize(int nodes_number, int edges_number)
 {
   this->nodes_number = nodes_number;
   this->edges_number = edges_number;
-  this->directed = directed;
   neighbors.resize(nodes_number);
 }
 
 void Graph::add_neighbor(int node_index, int neighbor_index)
 {
-  neighbors[node_index].push_back(neighbor_index);
+  if (node_index != neighbor_index)
+  {
+    printf("%d %d\n",node_index, neighbor_index);
+    if (node_index>=counted_nodes_number ||
+        neighbor_index>=counted_nodes_number)
+    {
+      counted_nodes_number = max(node_index, neighbor_index) + 1;
+      neighbors.resize(max(counted_nodes_number, (int) neighbors.size()));
+    }
+
+    if (find(neighbors[node_index].begin(),
+             neighbors[node_index].end(),
+             neighbor_index) == neighbors[node_index].end())
+    {
+      assert(find(neighbors[neighbor_index].begin(),
+                  neighbors[neighbor_index].end(),
+                  node_index) == neighbors[neighbor_index].end());
+      neighbors[node_index].push_back(neighbor_index);
+      neighbors[neighbor_index].push_back(node_index);
+      counted_edges_number += 1;
+    }
+  }
+}
+
+void Graph::check_number_edges() {
+  printf("Declared number of edges %d\nCounted number of edges %d\n",
+         edges_number, counted_edges_number);
 }
 
 void Graph::print_graph() const
@@ -81,10 +107,7 @@ double Graph::get_fraction_edges_cut(const Partition& partition) const {
     }
   }
 
-  if (!this->directed)
-  {
-    edges_cut /= 2;
-  }
+  edges_cut /= 2;
 
-  return ((double) edges_cut)/edges_number;
+  return ((double) edges_cut)/counted_edges_number;
 }

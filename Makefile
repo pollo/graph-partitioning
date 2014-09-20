@@ -1,7 +1,7 @@
 CC=g++
 
 #debug
-FLAGS=-Wall
+FLAGS=-Wall -O3
 #no debug
 #FLAGS= -O3
 

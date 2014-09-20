@@ -76,10 +76,12 @@ void fennel(const Graph& graph,
             int partitions_number,
             Partition* partition)
 {
-  //const double gamma = 3/2.0;
-  const double gamma = 1.1;
+  const double gamma = 3/2.0;
   const double alfa = graph.get_edges_number() * pow(partitions_number, gamma-1.0) /
     pow(graph.get_nodes_number(), gamma);
+
+  printf("%f %f\n",gamma,alfa);
+
   const bool with_threshold = false;
   const double v = 1.1;
 
@@ -92,6 +94,8 @@ void fennel(const Graph& graph,
   //initialize partitions
   partition->set_size(nodes.size(), partitions_number);
 
+  int count = 0;
+
   for (vector<int>::iterator node = nodes.begin();
        node != nodes.end();
        ++node) {
@@ -100,6 +104,7 @@ void fennel(const Graph& graph,
     for (int i=0; i<partitions_number; i++)
       partition_score[i] = 0;
 
+    int nn = 0;
     //add to partitions score number of neighbors in partition
     for (vector<int>::const_iterator neighbor =
            graph.get_neighbors(*node).begin();
@@ -109,21 +114,31 @@ void fennel(const Graph& graph,
       int neighbor_partition = partition->get_node_partition(*neighbor);
       if (neighbor_partition >= 0) {
         partition_score[neighbor_partition]++;
+        //nn++;
       }
     }
+
+    count ++;
+    if (nn>0)
+      printf("iteration %d neigh %d\n",count,nn);
 
     //subtract to partitions score cost function
     for (int i=0; i<partitions_number; i++)
     {
       int partition_size = partition->get_partition_size(i);
-      //double c = alfa * (pow(partition_size+1, gamma) - pow(partition_size, gamma));
-      double c = alfa * gamma * pow(partition_size,gamma-1);
+      double c = alfa * (pow(partition_size+1, gamma) -
+                          pow(partition_size, gamma));
+      //double c = alfa * gamma * pow(partition_size,gamma-1);
+    if (nn>0)
+    {
       printf("partition %d size %d\n",i,partition_size);
       printf("partition %d score %f\n",i,partition_score[i]);
-      partition_score[i] -= c;
+    }
+    partition_score[i] -= c;
+    if (nn>0)
       printf("partition %d score %f\n",i,partition_score[i]);
     }
-    printf("\n\n");
+    //printf("\n\n");
 
     //filter out partition above treshold
     vector<pair<double,int> > filtered_partition_score;
@@ -151,7 +166,8 @@ void fennel(const Graph& graph,
       }
     }
 
-    //printf("Selected partition %d\n",selected_partition);
+    if (nn>0)
+    printf("Selected partition %d\n",selected_partition);
 
     //assign node to partition
     partition->set_node_partition(*node, selected_partition);

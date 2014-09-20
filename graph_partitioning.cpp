@@ -23,14 +23,14 @@ int main(int argc, char** argv)
   }
 
   if (strncmp(argv[1],"slashdot",8) == 0)
-    snap_loader(&graph, SLASHDOT_FILE, SLASHDOT_DIRECTED);
+    snap_loader(&graph, SLASHDOT_FILE);
   else if (strncmp(argv[1],"amazon",6) == 0) {
-    snap_loader(&graph, AMAZON_FILE, AMAZON_DIRECTED);
-    graph.print_graph();
-    return 0;
+    snap_loader(&graph, AMAZON_FILE);
   }
   else if (strncmp(argv[1],"4elt",4) == 0)
     elt_loader(&graph);
+  else if (strncmp(argv[1],"twitter",7) == 0)
+    twitter_loader(&graph);
   else
   {
     printf("Invalid dataset name %s\n",argv[1]);
