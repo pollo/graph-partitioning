@@ -17,7 +17,6 @@ void snap_loader(Graph* graph, const char* file_name) {
   fgets(buffer, sizeof buffer, fp);
   fgets(buffer, sizeof buffer, fp);
   sscanf(buffer, "# Nodes: %d Edges: %d",&n,&m);
-  graph->initialize(n, m);
 
   //read edges
   while (fgets(buffer, sizeof buffer, fp) != NULL)
@@ -42,8 +41,6 @@ void elt_loader(Graph* graph) {
 
   elt_file >> n;
   elt_file >> m;
-
-  graph->initialize(n, m);
 
   //read edges
   getline(elt_file, line);

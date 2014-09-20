@@ -13,8 +13,11 @@ public:
 
   int get_partition_size(int partition_index) const;
 
+  int get_partitions_number() const;
+
 private:
   int nodes_number;
+  int partitions_number;
 
   std::vector<int> partitions;
   std::vector<int> partition_sizes;

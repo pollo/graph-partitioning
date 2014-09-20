@@ -63,12 +63,14 @@ int main(int argc, char** argv)
   }
 
   double fraction_edges_cut = graph.get_fraction_edges_cut(partition);
-  printf("Fraction of edges cut of dataset %s with heuristic "\
-         "%s and %d partitions:\n %f\n",
+  double maximum_load = graph.get_normalized_maximum_load(partition);
+  printf("Dataset %s with heuristic %s and %d partitions:\n",
          argv[1],
          argv[2],
-         partitions_number,
-         fraction_edges_cut);
+         partitions_number);
+  printf("Fraction edges cut = %f\nNormalized maximum load = %f\n",
+         fraction_edges_cut,
+         maximum_load);
 
   return 0;
 }

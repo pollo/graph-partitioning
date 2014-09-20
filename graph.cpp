@@ -86,8 +86,8 @@ int myrandom (int i) { return std::rand()%i;}
 
 void Graph::get_nodes_randomly(vector<int>* nodes) const {
   srand ( unsigned ( std::time(0) ) );
-  nodes->resize(nodes_number);
-  for (int i=0; i<nodes_number; i++)
+  nodes->resize(counted_nodes_number);
+  for (int i=0; i<counted_nodes_number; i++)
     (*nodes)[i] = i;
   random_shuffle(nodes->begin(), nodes->end(), myrandom);
 }
@@ -110,4 +110,18 @@ double Graph::get_fraction_edges_cut(const Partition& partition) const {
   edges_cut /= 2;
 
   return ((double) edges_cut)/counted_edges_number;
+}
+
+double Graph::get_normalized_maximum_load(const Partition& partition) const {
+  int maximum_load = 0;
+
+  for (int i=0; i<partition.get_partitions_number(); i++)
+  {
+    int partition_size = parition.get_partition_size(i);
+    if (partition_size > maximum_load)
+      maximum_load = partition_size;
+  }
+
+  return maximum_load /
+    ((double) counted_nodes_number / partition.get_partitions_number()):
 }
