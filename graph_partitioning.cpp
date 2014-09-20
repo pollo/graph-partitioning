@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
 
 #define MAX_PARTITIONS 10000
 
@@ -37,6 +38,8 @@ int main(int argc, char** argv)
     exit(1);
   }
 
+  time_t start = time(0);
+
   int partitions_number = strtol(argv[3], NULL, 10);
   if (partitions_number < 1 || partitions_number > MAX_PARTITIONS)
   {
@@ -61,6 +64,10 @@ int main(int argc, char** argv)
     printf("Invalid heuristic name %s\n",argv[2]);
     exit(1);
   }
+
+  time_t end = time(0);
+  int time = difftime(end, start);
+  printf("Partitioned in %d seconds\n",time);
 
   double fraction_edges_cut = graph.get_fraction_edges_cut(partition);
   double maximum_load = graph.get_normalized_maximum_load(partition);

@@ -28,7 +28,7 @@ void snap_loader(Graph* graph, const char* file_name) {
     }
   }
 
-  graph->check_number_edges();
+  graph->print_graph_size();
 
   fclose(fp);
 }
@@ -56,7 +56,7 @@ void elt_loader(Graph* graph) {
     }
   }
 
-  graph->check_number_edges();
+  graph->print_graph_size();
 
   elt_file.close();
 }
@@ -72,6 +72,8 @@ void twitter_loader(Graph* graph) {
       sscanf(buffer, "%d\t%d", &from,&to);
       graph->add_neighbor(from,to);
   }
+
+  graph->print_graph_size();
 
   fclose(fp);
 }

@@ -80,10 +80,15 @@ void fennel(const Graph& graph,
   const double alfa = graph.get_edges_number() * pow(partitions_number, gamma-1.0) /
     pow(graph.get_nodes_number(), gamma);
 
-  printf("%f %f\n",gamma,alfa);
+  printf("gamma=%f alfa=%f\n",gamma,alfa);
 
   const bool with_threshold = false;
   const double v = 1.1;
+
+  if (with_threshold)
+    printf("With threshold set to %f\n",v);
+  else
+    printf("Without threshold\n");
 
   vector<int> nodes;
   vector<double> partition_score(partitions_number);

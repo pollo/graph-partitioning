@@ -8,18 +8,10 @@
 
 using namespace std;
 
-void Graph::initialize(int nodes_number, int edges_number)
-{
-  this->nodes_number = nodes_number;
-  this->edges_number = edges_number;
-  neighbors.resize(nodes_number);
-}
-
 void Graph::add_neighbor(int node_index, int neighbor_index)
 {
   if (node_index != neighbor_index)
   {
-    printf("%d %d\n",node_index, neighbor_index);
     if (node_index>=counted_nodes_number ||
         neighbor_index>=counted_nodes_number)
     {
@@ -41,9 +33,9 @@ void Graph::add_neighbor(int node_index, int neighbor_index)
   }
 }
 
-void Graph::check_number_edges() {
-  printf("Declared number of edges %d\nCounted number of edges %d\n",
-         edges_number, counted_edges_number);
+void Graph::print_graph_size() const {
+  printf("Counted number of edges %lld\n", counted_edges_number);
+  printf("Counted number of nodes %d\n", counted_nodes_number);
 }
 
 void Graph::print_graph() const
@@ -60,8 +52,8 @@ void Graph::print_graph() const
     }
     printf("\n");
     }*/
-  printf("%d %d\n",nodes_number, edges_number);
-  for (int i=0; i<nodes_number; i++)
+  printf("%d %lld\n",counted_nodes_number, counted_edges_number);
+  for (int i=0; i<counted_nodes_number; i++)
   {
     const vector<int>& neighbors = get_neighbors(i);
     bool no = true;
@@ -93,9 +85,9 @@ void Graph::get_nodes_randomly(vector<int>* nodes) const {
 }
 
 double Graph::get_fraction_edges_cut(const Partition& partition) const {
-  int edges_cut = 0;
+  long long int edges_cut = 0;
 
-  for (int node = 0; node < nodes_number; node++)
+  for (int node = 0; node < counted_nodes_number; node++)
   {
     int node_partition = partition.get_node_partition(node);
     for (vector<int>::const_iterator neighbor = neighbors[node].begin();
@@ -117,11 +109,11 @@ double Graph::get_normalized_maximum_load(const Partition& partition) const {
 
   for (int i=0; i<partition.get_partitions_number(); i++)
   {
-    int partition_size = parition.get_partition_size(i);
+    int partition_size = partition.get_partition_size(i);
     if (partition_size > maximum_load)
       maximum_load = partition_size;
   }
 
-  return maximum_load /
-    ((double) counted_nodes_number / partition.get_partitions_number()):
+  return maximum_load / \
+    ((double) counted_nodes_number / partition.get_partitions_number());
 }
