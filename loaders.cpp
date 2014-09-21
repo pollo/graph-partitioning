@@ -4,6 +4,7 @@
 #include<fstream>
 #include<sstream>
 #include<string>
+#include<cstring>
 
 using namespace std;
 
@@ -26,6 +27,33 @@ void snap_loader(Graph* graph, const char* file_name) {
       sscanf(buffer, "%d\t%d", &from,&to);
       graph->add_neighbor(from,to);
     }
+  }
+
+  graph->print_graph_size();
+
+  fclose(fp);
+}
+
+void preprocessed_loader(Graph* graph, const char* file_name) {
+  int n,m;
+  int from, to;
+  char buffer[1000];
+  char pre_file_name[1000];
+  strcpy(pre_file_name, file_name);
+  strcat(pre_file_name, ".preprocessed");
+
+  printf("%s\n",pre_file_name);
+
+  FILE *fp = fopen(pre_file_name, "r");
+
+  fgets(buffer, sizeof buffer, fp);
+  sscanf(buffer, "%d %d\n",&n,&m);
+
+  //read edges
+  while (fgets(buffer, sizeof buffer, fp) != NULL)
+  {
+    sscanf(buffer, "%d %d", &from,&to);
+    graph->add_neighbor(from,to);
   }
 
   graph->print_graph_size();

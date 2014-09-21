@@ -72,6 +72,9 @@ int main(int argc, char** argv)
     elt_loader(&graph);
   else if (strncmp(argv[1],"twitter",7) == 0)
     twitter_loader(&graph);
+  else if (strncmp(argv[1],"pre.amazon",11) == 0) {
+    preprocessed_loader(&graph, AMAZON_FILE);
+  }
   else
   {
     printf("Invalid dataset name %s\n",argv[1]);

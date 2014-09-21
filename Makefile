@@ -5,10 +5,13 @@ FLAGS=-Wall -O3
 #no debug
 #FLAGS= -O3
 
-all: graph_partitioning
+all: graph_partitioning preprocessing
 
 graph_partitioning: graph_partitioning.cpp graph.o loaders.o partition.o partitioners.o
 	$(CC) $(FLAGS) graph_partitioning.cpp graph.o loaders.o partition.o partitioners.o -o graph_partitioning
+
+preprocessing: preprocessing.cpp graph.o loaders.o
+	$(CC) $(FLAGS) preprocessing.cpp graph.o loaders.o partition.o -o preprocessing
 
 graph.o: graph.cpp graph.h partition.o
 	$(CC) $(FLAGS) -c graph.cpp

@@ -17,6 +17,8 @@
 
 void snap_loader(Graph* graph, const char* file_name);
 
+void preprocessed_loader(Graph* graph, const char* file_name);
+
 void elt_loader(Graph* graph);
 
 void twitter_loader(Graph* graph);
