@@ -30,6 +30,12 @@ void run_heuristic(const char* heuristic_name,
            partitions_number,
            &partition);
   }
+  else if (strncmp(heuristic_name,"NNEIGHBORS",10) == 0)
+  {
+    non_neighbors_greedy(graph,
+                         partitions_number,
+                         &partition);
+  }
   else
   {
     printf("Invalid heuristic name %s\n",heuristic_name);
@@ -98,6 +104,12 @@ int main(int argc, char** argv)
   if (strstr(argv[2],"FENNEL") != NULL)
   {
     run_heuristic("FENNEL",partitions_number,argv[1],graph);
+    heuristics_valid = true;
+  }
+
+  if (strstr(argv[2],"NNEIGHBORS") != NULL)
+  {
+    run_heuristic("NNEIGHBORS",partitions_number,argv[1],graph);
     heuristics_valid = true;
   }
 
