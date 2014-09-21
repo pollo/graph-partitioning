@@ -21,6 +21,8 @@ public:
 
   double get_fraction_edges_cut(const Partition& partition) const;
 
+  double get_communication_volume(const Partition& partition) const;
+
   double get_normalized_maximum_load(const Partition& partition) const;
 
   int get_nodes_number() const {

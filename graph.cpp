@@ -104,6 +104,34 @@ double Graph::get_fraction_edges_cut(const Partition& partition) const {
   return ((double) edges_cut)/counted_edges_number;
 }
 
+double Graph::get_communication_volume(const Partition& partition) const
+{
+  int communication_volume = 0;
+
+  for (int node = 0; node < counted_nodes_number; node++)
+  {
+    int node_partition = partition.get_node_partition(node);
+    vector<bool> seen_partition(partition.get_partitions_number(), false);
+    for (vector<int>::const_iterator neighbor = neighbors[node].begin();
+         neighbor != neighbors[node].end();
+         ++neighbor)
+    {
+      int neighbor_partition = partition.get_node_partition(*neighbor);
+      if (node_partition != neighbor_partition &&
+          !seen_partition[neighbor_partition])
+      {
+        communication_volume ++;
+        seen_partition[neighbor_partition] = true;
+      }
+    }
+  }
+
+  double fraction_communication_volume = ((double) communication_volume) /
+    (counted_nodes_number * (partition.get_partitions_number()-1));
+
+  return fraction_communication_volume;;
+}
+
 double Graph::get_normalized_maximum_load(const Partition& partition) const {
   int maximum_load = 0;
 

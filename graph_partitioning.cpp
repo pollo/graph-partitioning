@@ -47,14 +47,17 @@ void run_heuristic(const char* heuristic_name,
   printf("Partitioned in %d seconds\n",time);
 
   double fraction_edges_cut = graph.get_fraction_edges_cut(partition);
+  double communication_volume = graph.get_communication_volume(partition);
   double maximum_load = graph.get_normalized_maximum_load(partition);
   printf("Dataset %s with heuristic %s and %d partitions:\n",
          dataset,
          heuristic_name,
          partitions_number);
-  printf("Fraction edges cut = %f\nNormalized maximum load = %f\n\n",
+  printf("Fraction edges cut = %f\nNormalized maximum load = %f\n",
          fraction_edges_cut,
          maximum_load);
+  printf("Communication volume %f\n\n",
+         communication_volume);
 }
 
 int main(int argc, char** argv)
