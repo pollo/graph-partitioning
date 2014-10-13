@@ -19,6 +19,7 @@
 # Executable
 graph_partitioning
 preprocessing
+run_experiment
 
 # Dataset
 dataset

@@ -36,7 +36,7 @@ void snap_loader(Graph* graph, const char* file_name) {
     }
   }
 
-  graph->print_graph_size();
+  //graph->print_graph_size();
 
   fclose(fp);
 }

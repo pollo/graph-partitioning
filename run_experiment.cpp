@@ -34,8 +34,8 @@ int main(int argc, char** argv)
 
   snap_loader(&graph, argv[1]);
 
-  printf("Dataset;Experiment #;Heuristic;K;Edge cut;"\
-         "Communication Volume; Normalized Maximum Load;Runtime\n");
+  //printf("Dataset;Experiment #;Heuristic;K;Edge cut;"                 \
+  //       "Communication Volume; Normalized Maximum Load;Runtime\n");
   for (int experiment = 1; experiment<=N_EXPERIMENTS; experiment++)
   {
     for (int heuristic = 0; heuristic<3; heuristic++)
