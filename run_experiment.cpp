@@ -32,9 +32,14 @@ int main(int argc, char** argv)
     exit(1);
   }
 
-  snap_loader(&graph, argv[1]);
+  if (strstr(argv[1],"twitter") != NULL)
+    twitter_loader(&graph);
+  else if (strstr(argv[1],"4elt") != NULL)
+    elt_loader(&graph);
+  else
+    snap_loader(&graph, argv[1]);
 
-  //printf("Dataset;Experiment #;Heuristic;K;Edge cut;"                 \
+  //printf("Dataset;Experiment #;Heuristic;K;Edge cut;"           
   //       "Communication Volume; Normalized Maximum Load;Runtime\n");
   for (int experiment = 1; experiment<=N_EXPERIMENTS; experiment++)
   {
