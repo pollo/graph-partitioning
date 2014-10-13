@@ -15,6 +15,8 @@ public:
 
   void get_nodes_randomly(std::vector<int>* nodes) const;
 
+  void get_nodes_bfs(std::vector<int>* nodes) const;
+
   void print_graph_size() const;
 
   void print_graph() const;

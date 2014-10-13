@@ -5,6 +5,7 @@
 #include<sstream>
 #include<string>
 #include<cstring>
+#include<cstdlib>
 
 using namespace std;
 
@@ -13,6 +14,12 @@ void snap_loader(Graph* graph, const char* file_name) {
   int from, to;
   char buffer[1000];
   FILE *fp = fopen(file_name, "r");
+
+  if (fp == NULL)
+  {
+    printf("File %s not found\n",file_name);
+    exit(1);
+  }
 
   fgets(buffer, sizeof buffer, fp);
   fgets(buffer, sizeof buffer, fp);

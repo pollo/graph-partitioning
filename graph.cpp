@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
+#include <queue>
 
 #include"graph.h"
 
@@ -23,9 +24,6 @@ void Graph::add_neighbor(int node_index, int neighbor_index)
              neighbors[node_index].end(),
              neighbor_index) == neighbors[node_index].end())
     {
-      assert(find(neighbors[neighbor_index].begin(),
-                  neighbors[neighbor_index].end(),
-                  node_index) == neighbors[neighbor_index].end());
       neighbors[node_index].push_back(neighbor_index);
       neighbors[neighbor_index].push_back(node_index);
       counted_edges_number += 1;
@@ -82,6 +80,41 @@ void Graph::get_nodes_randomly(vector<int>* nodes) const {
   for (int i=0; i<counted_nodes_number; i++)
     (*nodes)[i] = i;
   random_shuffle(nodes->begin(), nodes->end(), myrandom);
+}
+
+void Graph::get_nodes_bfs(vector<int>* nodes) const {
+  vector<bool> visited(counted_nodes_number, false);
+  queue<int> q;
+
+  nodes->reserve(counted_nodes_number);
+
+  for (int i=0; i<counted_nodes_number; i++)
+  {
+    if (!visited[i])
+    {
+      visited[i] = true;
+      q.push(i);
+      while (!q.empty())
+      {
+        int node = q.front();
+        nodes->push_back(node);
+        q.pop();
+        for (vector<int>::const_iterator neighbor =
+               get_neighbors(node).begin();
+             neighbor != get_neighbors(node).end();
+             ++neighbor)
+        {
+          if (!visited[*neighbor])
+          {
+            visited[*neighbor] = true;
+            q.push(*neighbor);
+          }
+        }
+      }
+    }
+  }
+
+  printf("%d %d\n",counted_nodes_number, (int)nodes->size());
 }
 
 double Graph::get_fraction_edges_cut(const Partition& partition) const {

@@ -15,6 +15,12 @@
 #define TWITTER_DIRECTED true
 #define TWITTER_FILE "dataset/twitter_rv.net"
 
+#define LIVEJOURNAL_DIRECTED true
+#define LIVEJOURNAL_FILE "dataset/soc-LiveJournal1.txt"
+
+#define FACEBOOK_DIRECTED false
+#define FACEBOOK_FILE "dataset/facebook_combined.txt"
+
 void snap_loader(Graph* graph, const char* file_name);
 
 void preprocessed_loader(Graph* graph, const char* file_name);

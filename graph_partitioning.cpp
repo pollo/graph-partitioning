@@ -77,6 +77,10 @@ int main(int argc, char** argv)
   else if (strncmp(argv[1],"amazon",6) == 0) {
     snap_loader(&graph, AMAZON_FILE);
   }
+  else if (strncmp(argv[1],"livejournal",11) == 0)
+    snap_loader(&graph, LIVEJOURNAL_FILE);
+  else if (strncmp(argv[1],"facebook",8) == 0)
+    snap_loader(&graph, FACEBOOK_FILE);
   else if (strncmp(argv[1],"4elt",4) == 0)
     elt_loader(&graph);
   else if (strncmp(argv[1],"twitter",7) == 0)
